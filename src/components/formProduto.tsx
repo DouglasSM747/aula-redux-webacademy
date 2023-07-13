@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addProduto } from "../redux/slices/produtos.slice";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-bootstrap";
@@ -23,7 +22,6 @@ export default function FormularioProduto() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    dispatch(addProduto(inputProduto));
   };
   return (
     <div

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { RootState } from "../redux/store";
 
 export default function ProdutosList() {
-  const produtos = useSelector((state: RootState) => state.produto.produtos);
+  const { produtos } = useSelector((state: RootState) => state.apiProduto);
 
   return (
     <table className="table table-bordered">

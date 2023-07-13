@@ -1,23 +1,42 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import countReducer from "./slices/count.slice";
-import produtoReducer from "./slices/produtos.slice";
+import { apiLoginReducer } from "./slices/api.slice.login";
+
 import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import { apiProdutoReducer } from "./slices/api.slice.produtos";
 
 const rootReducer = combineReducers({
   count: countReducer,
-  produto: produtoReducer,
+  apiLogin: apiLoginReducer,
+  apiProduto: apiProdutoReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
+  blacklist: ["apiLogin", "apiProduto"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
 export const persistor = persistStore(store);
