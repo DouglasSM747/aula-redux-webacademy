@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ProdutosList from "./components/listProdutos";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-bootstrap";
+import FormularioProduto from "./components/formProduto";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyItems: "center",
+      }}
+    >
+      <div style={{ width: "50%" }}>
+        <FormularioProduto />
+        <ProdutosList />
+      </div>
     </div>
   );
 }
