@@ -13,13 +13,13 @@ interface ProdutosState {
 const initialState: ProdutosState = {
   produtos: [
     {
-      preco: 1.9,
+      preco: 1.97,
       nome: "Sabonete",
       estoque: 10,
     },
     {
-      preco: 1.9,
-      nome: "Sabonete",
+      preco: 7.90,
+      nome: "Nescau",
       estoque: 10,
     },
   ],
