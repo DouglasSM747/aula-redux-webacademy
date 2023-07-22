@@ -1,11 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import { configApi } from "../../constans";
+import { api } from "../../services/instanceAxios";
 
 interface ApiState {
   loading: boolean;
   data: object;
   error: string;
   isSucess: boolean;
+  isAdmin: boolean;
 }
 
 const initialState: ApiState = {
@@ -13,14 +16,16 @@ const initialState: ApiState = {
   data: {},
   error: "",
   isSucess: false,
+  isAdmin: false,
 };
 
 export const doLogin = createAsyncThunk(
   "api/login",
   async (dataLogin: object) => {
-    const response: AxiosResponse = await axios.post(
-      "http://localhost:3333/v1/login",
-      dataLogin
+    const response: AxiosResponse = await api.post(
+      `${configApi.apiUrl}/v1/login`,
+      dataLogin,
+      { withCredentials: true }
     );
 
     return { payload: response.data, status: response.status };
@@ -30,7 +35,12 @@ export const doLogin = createAsyncThunk(
 const apiLoginSlice = createSlice({
   name: "apiLogin",
   initialState,
-  reducers: {},
+  reducers: {
+    logout(state) {
+      state = initialState;
+      return state;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(doLogin.pending, (state) => {
@@ -41,7 +51,7 @@ const apiLoginSlice = createSlice({
       .addCase(doLogin.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
-
+        state.isAdmin = action.payload.payload.isAdmin;
         if (action.payload.status === 200) {
           state.isSucess = true;
         }
@@ -53,6 +63,6 @@ const apiLoginSlice = createSlice({
       });
   },
 });
-
+export const { logout } = apiLoginSlice.actions;
 export const { reducer: apiLoginReducer } = apiLoginSlice;
 export default apiLoginSlice;

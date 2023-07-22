@@ -7,6 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import App from "./App";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login";
+import Carrinho from "./pages/carrinho";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,6 +16,7 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter([
   { path: "/", element: <Login /> },
   { path: "/home", element: <App /> },
+  { path: "/cart", element: <Carrinho /> },
 ]);
 
 root.render(

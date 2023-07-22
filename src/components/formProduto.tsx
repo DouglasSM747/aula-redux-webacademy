@@ -3,17 +3,16 @@ import { useDispatch } from "react-redux";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-bootstrap";
+import { AppDispatch } from "../redux/store";
+import { addProduto } from "../redux/slices/api.slice.produtos";
 
 export default function FormularioProduto() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const [inputProduto, SetProduto] = useState({
-    id: 0,
     nome: "",
     preco: 0,
     estoque: 0,
-    createdAt: "",
-    updatedAt: "",
   });
 
   const handleInput = (e: any) => {
@@ -22,7 +21,9 @@ export default function FormularioProduto() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    dispatch(addProduto(inputProduto));
   };
+
   return (
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
@@ -46,7 +47,7 @@ export default function FormularioProduto() {
           <label className="col-sm-3 col-form-lable">Preço</label>
           <div className="col-md-8">
             <input
-              type="text"
+              type="number"
               className="form-control"
               name="preco"
               value={inputProduto.preco}
@@ -59,7 +60,7 @@ export default function FormularioProduto() {
           <label className="col-sm-3 col-form-lable">Estoque</label>
           <div className="col-md-8">
             <input
-              type="text"
+              type="number"
               className="form-control"
               name="estoque"
               value={inputProduto.estoque}
