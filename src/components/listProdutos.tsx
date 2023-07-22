@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import { RootSate } from "../redux/store";
+import { RootState } from "../redux/store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-bootstrap";
 
 export default function ListagemProdutos() {
-  const produto = useSelector((state: RootSate) => state.produto);
+  const produto = useSelector((state: RootState) => state.produto);
 
   return (
     <div>

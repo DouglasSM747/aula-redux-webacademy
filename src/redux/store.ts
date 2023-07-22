@@ -1,13 +1,26 @@
-import { configureStore } from "@reduxjs/toolkit";
-import CounterReducer from "./features/count.slice";
-import ProdutoReducer from "./features/produto.slice";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import ProdutoReducer from "../redux/features/produto.slice";
 
-export const store = configureStore({
-  reducer: {
-    count: CounterReducer,
-    produto: ProdutoReducer,
-  },
+const rooReducer = combineReducers({
+  produto: ProdutoReducer,
 });
 
-export type RootSate = ReturnType<typeof store.getState>;
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rooReducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});
+export const persistor = persistStore(store);
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
